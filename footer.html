@@ -1,0 +1,40 @@
+@let content = footerService.footer();
+<footer class="site-footer">
+  <div class="footer-grid">
+    <section class="footer-brand">
+      <a class="footer-logo" routerLink="/home" [attr.aria-label]="'nav.home' | translate">Shop<span>Zone</span><span class="footer-logo-mark">✦</span></a>
+      @if (content.tagline) { <p>{{ content.tagline }}</p> }
+      <a class="footer-shop-link" routerLink="/products">{{ 'nav.products' | translate }} <span aria-hidden="true">→</span></a>
+    </section>
+
+    <nav class="footer-col" aria-label="Explore ShopZone">
+      <h4>{{ 'footer.quickLinks' | translate }}</h4>
+      <a routerLink="/home">{{ 'nav.home' | translate }}</a>
+      <a routerLink="/products">{{ 'nav.products' | translate }}</a>
+      <a routerLink="/recommendations">{{ 'nav.recommendations' | translate }}</a>
+      <a routerLink="/products" [queryParams]="{ favorites: 'true' }">♥ {{ 'nav.wishlist' | translate }}</a>
+    </nav>
+
+    <nav class="footer-col" aria-label="Account links">
+      <h4>{{ 'footer.account' | translate }}</h4>
+      @if (authService.currentUser()) {
+        <a routerLink="/cart">{{ 'nav.cart' | translate }}</a>
+      } @else {
+        <a routerLink="/login">{{ 'footer.login' | translate }}</a>
+        <a routerLink="/signup">{{ 'footer.signup' | translate }}</a>
+      }
+    </nav>
+
+    <section class="footer-col footer-contact">
+      <h4>{{ 'footer.contact' | translate }}</h4>
+      @if (content.address) { <p><span aria-hidden="true">⌖</span>{{ content.address }}</p> }
+      @if (content.email) { <p><span aria-hidden="true">✉</span><a [href]="'mailto:' + content.email">{{ content.email }}</a></p> }
+      @if (content.phone) { <p><span aria-hidden="true">☎</span><a [href]="'tel:' + content.phone">{{ content.phone }}</a></p> }
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© {{ year }} {{ content.copyright }}</span>
+    <a href="#top">{{ 'footer.backToTop' | translate }} <span aria-hidden="true">↑</span></a>
+  </div>
+</footer>

@@ -1,0 +1,39 @@
+<div class="analysis-backdrop" role="presentation" (click)="close()">
+  <section class="analysis-dialog" role="dialog" aria-modal="true" [attr.aria-labelledby]="'analysis-dialog-title'" (click)="$event.stopPropagation()">
+    <button type="button" class="close-button" [attr.aria-label]="'analysis.close' | translate" (click)="close()">×</button>
+    <div class="dialog-heading">
+      <span class="analysis-badge">✦ {{ 'analysis.demoBadge' | translate }}</span>
+      <h2 id="analysis-dialog-title">{{ 'analysis.title' | translate }}</h2>
+      <p>{{ 'analysis.disclaimer' | translate }}</p>
+    </div>
+
+    <div class="analyzed-product">
+      <img [src]="product().image" [alt]="product().name">
+      <div>
+        <span class="category-label">{{ product().category }}</span>
+        <h3>{{ product().name }}</h3>
+        <p>{{ product().description }}</p>
+        <div class="product-facts">
+          <span>₹{{ product().price }}</span>
+          <span>⭐ {{ product().rating }}</span>
+          <span>{{ 'products.available' | translate:{count: product().stock} }}</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="insights-section">
+      <h3>{{ 'analysis.findings' | translate }}</h3>
+      <ul>
+        @for (insight of analysis(); track insight.title) {
+          <li><span class="finding-icon" aria-hidden="true">✓</span><div><strong>{{ insight.title }}</strong><p>{{ insight.detail }}</p></div></li>
+        }
+      </ul>
+    </section>
+
+    <p class="analysis-limit">{{ 'analysis.limitations' | translate }}</p>
+    <div class="dialog-actions">
+      <button type="button" class="favorite-action" [attr.aria-pressed]="isFavorite()" (click)="toggleFavorite()">{{ isFavorite() ? ('analysis.saved' | translate) : ('analysis.saveFavorite' | translate) }}</button>
+      <button type="button" class="done-action" (click)="close()">{{ 'analysis.done' | translate }}</button>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,41 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="logo">Shop<span>Zone</span></div>
+    <h1>{{ 'auth.signIn' | translate }}</h1>
+
+    <div class="login-roles" role="group" [attr.aria-label]="'auth.accountType' | translate">
+      <button type="button" class="role-option" [class.selected]="selectedRole === 'user'" [attr.aria-pressed]="selectedRole === 'user'" (click)="selectRole('user')">
+        <span class="role-icon" aria-hidden="true">♙</span>
+        <span>{{ 'auth.customerLogin' | translate }}</span>
+      </button>
+      <button type="button" class="role-option" [class.selected]="selectedRole === 'admin'" [attr.aria-pressed]="selectedRole === 'admin'" (click)="selectRole('admin')">
+        <span class="role-icon" aria-hidden="true">⚙</span>
+        <span>{{ 'auth.adminLogin' | translate }}</span>
+      </button>
+    </div>
+
+    @if (selectedRole === 'admin') {
+      <div class="demo-admin">
+        <div><strong>{{ 'auth.demoAdmin' | translate }}</strong><span>admin@ecommerce.com · admin123</span></div>
+        <button type="button" class="fill-demo" (click)="fillDemoAdmin()">{{ 'auth.useDemo' | translate }}</button>
+      </div>
+    }
+
+    <form (ngSubmit)="login()">
+      <label for="login-email">{{ 'auth.email' | translate }}</label>
+      <input id="login-email" type="email" name="email" [(ngModel)]="email" [placeholder]="'auth.emailPlaceholder' | translate" autocomplete="username" required />
+
+      <label for="login-password">{{ 'auth.password' | translate }}</label>
+      <div class="password-field">
+        <input id="login-password" [type]="showPassword() ? 'text' : 'password'" name="password" [(ngModel)]="password" [placeholder]="'auth.passwordPlaceholder' | translate" autocomplete="current-password" required />
+        <button type="button" class="password-toggle" (click)="showPassword.set(!showPassword())" [attr.aria-label]="(showPassword() ? 'auth.hidePassword' : 'auth.showPassword') | translate">{{ (showPassword() ? 'auth.hidePassword' : 'auth.showPassword') | translate }}</button>
+      </div>
+
+      <label class="remember-option"><input type="checkbox" name="rememberEmail" [(ngModel)]="rememberEmail" /><span>{{ 'auth.rememberEmail' | translate }}</span></label>
+      @if (errorMessage) { <div class="error" role="alert">{{ errorMessage }}</div> }
+      <button class="submit-button" type="submit">{{ (selectedRole === 'admin' ? 'auth.adminLogin' : 'auth.signInButton') | translate }}</button>
+    </form>
+    <div class="divider">{{ 'auth.newTo' | translate }}</div>
+    <a routerLink="/signup" class="create-account">{{ 'auth.createShopZone' | translate }}</a>
+  </div>
+</div>

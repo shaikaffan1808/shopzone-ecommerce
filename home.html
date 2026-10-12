@@ -1,0 +1,13 @@
+<section class="hero"><div class="hero-content">
+  <h1>{{ 'home.title' | translate }}</h1><p>{{ 'home.subtitle' | translate }}</p>
+  <button type="button" routerLink="/products">{{ 'home.shopNow' | translate }}</button>
+  <a class="quiz-link" routerLink="/recommendations">{{ 'home.quizCta' | translate }} <span aria-hidden="true">→</span></a>
+</div></section>
+<section class="categories"><h2>{{ 'home.shopByCategory' | translate }}</h2><div class="category-grid">
+  <div class="category-card"><div class="category-icon">📱</div><h3>{{ 'home.electronics' | translate }}</h3><p>{{ 'home.electronicsDescription' | translate }}</p></div>
+  <div class="category-card"><div class="category-icon">👕</div><h3>{{ 'home.fashion' | translate }}</h3><p>{{ 'home.fashionDescription' | translate }}</p></div>
+  <div class="category-card"><div class="category-icon">🏠</div><h3>{{ 'home.home' | translate }}</h3><p>{{ 'home.homeDescription' | translate }}</p></div>
+  <div class="category-card"><div class="category-icon">🎧</div><h3>{{ 'home.accessories' | translate }}</h3><p>{{ 'home.accessoriesDescription' | translate }}</p></div>
+</div></section>
+<app-store-benefits />
+<app-newsletter />

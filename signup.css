@@ -1,0 +1,68 @@
+.auth-page {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f3f3f3;
+  padding: 30px;
+}
+
+.auth-card {
+  width: 360px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.logo {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.logo span {
+  color: #ff9900;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+label {
+  display: block;
+  margin: 14px 0 6px;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px;
+  border: 1px solid #999;
+  border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  border: 0;
+  border-radius: 5px;
+  background: #ffd814;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.error {
+  margin-top: 12px;
+  padding: 10px;
+  color: #b12704;
+  background: #fff0f0;
+}
+
+.login-text {
+  text-align: center;
+  margin-top: 20px;
+}

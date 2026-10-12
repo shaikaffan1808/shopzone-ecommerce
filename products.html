@@ -1,0 +1,68 @@
+<div class="products-page">
+  <section class="products-header">
+    <div class="products-heading">
+      <span class="products-eyebrow">SHOPZONE COLLECTION</span>
+      <h1>{{ 'products.title' | translate }}</h1>
+      <p>{{ 'products.subtitle' | translate }}</p>
+    </div>
+    <label class="search-box">
+      <span aria-hidden="true">⌕</span>
+      <input
+        type="search"
+        [ngModel]="searchText()"
+        (ngModelChange)="searchText.set($event)"
+        [placeholder]="'products.search' | translate"
+        [attr.aria-label]="'products.search' | translate" />
+    </label>
+  </section>
+
+  <section class="filters" [attr.aria-label]="'products.filters' | translate">
+    <button type="button" [class.active]="selectedCategory() === 'All'" [attr.aria-pressed]="selectedCategory() === 'All'" (click)="selectedCategory.set('All')">{{ 'products.all' | translate }}</button>
+    @for (category of categories().slice(1); track category) {
+      <button type="button" [class.active]="selectedCategory() === category" [attr.aria-pressed]="selectedCategory() === category" (click)="selectedCategory.set(category)">{{ category }}</button>
+    }
+    <button type="button" class="favorites-filter" [class.active]="favoritesOnly()" [attr.aria-pressed]="favoritesOnly()" (click)="toggleFavoritesFilter()">♥ {{ 'products.favorites' | translate }} ({{ favoriteIds().length }})</button>
+  </section>
+
+  <div class="results-bar" aria-live="polite">
+    <span>{{ 'products.showing' | translate:{count: filteredProducts().length} }}</span>
+  </div>
+
+  <section class="product-grid">
+    @for (product of filteredProducts(); track product.id) {
+      <article class="product-card">
+        <div class="image-container">
+          <img [src]="product.image" [alt]="product.name" />
+          <span class="rating">⭐ {{ product.rating }}</span>
+          <button
+            type="button"
+            class="favorite-btn"
+            [class.is-favorite]="favoriteIds().includes(product.id)"
+            [attr.aria-pressed]="favoriteIds().includes(product.id)"
+            [attr.aria-label]="((favoriteIds().includes(product.id) ? 'products.removeFavorite' : 'products.addFavorite') | translate) + ': ' + product.name"
+            (click)="toggleFavorite(product.id)">{{ favoriteIds().includes(product.id) ? '♥' : '♡' }}</button>
+        </div>
+        <div class="product-info">
+          <span class="category">{{ product.category }}</span>
+          <h2>{{ product.name }}</h2>
+          <p>{{ product.description }}</p>
+          <div class="price">{{ product.price | localizedCurrency }}</div>
+          <div class="stock">
+            @if (product.stock > 0) {
+              <span>{{ 'products.available' | translate:{count: product.stock} }}</span>
+            } @else {
+              <span class="out">{{ 'products.outOfStock' | translate }}</span>
+            }
+          </div>
+          <button class="cart-btn" [disabled]="product.stock === 0" (click)="addToCart(product)">🛒 {{ 'products.addToCart' | translate }}</button>
+        </div>
+      </article>
+    } @empty {
+      <div class="no-products">
+        <span class="empty-icon" aria-hidden="true">⌕</span>
+        <h2>{{ favoritesOnly() ? ('products.noFavorites' | translate) : ('products.noProducts' | translate) }}</h2>
+        <p>{{ 'products.tryAnother' | translate }}</p>
+      </div>
+    }
+  </section>
+</div>

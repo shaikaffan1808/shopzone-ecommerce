@@ -1,0 +1,210 @@
+.auth-page {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f3f3f3;
+  padding: 30px;
+}
+
+.auth-card {
+  width: min(100%, 400px);
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.logo {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.logo span {
+  color: #ff9900;
+}
+
+.login-roles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin: 0 0 20px;
+}
+
+.role-option {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 9px;
+  border: 1px solid #d7d7d7;
+  border-radius: 6px;
+  background: #fff;
+  color: #444;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.role-option.selected {
+  border-color: #477b60;
+  background: #eff7f1;
+  color: #28573b;
+  box-shadow: 0 0 0 1px #477b60;
+}
+
+.role-icon {
+  font-size: 18px;
+}
+
+.demo-admin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: -5px 0 17px;
+  padding: 11px;
+  border: 1px solid #dce9dd;
+  border-radius: 6px;
+  background: #f4faf4;
+  font-size: 12px;
+}
+
+.demo-admin div {
+  display: grid;
+  gap: 4px;
+}
+
+.demo-admin strong {
+  color: #355d40;
+}
+
+.demo-admin span {
+  color: #555;
+}
+
+.fill-demo {
+  width: auto;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 7px 9px;
+  border: 1px solid #9fb5a3;
+  background: white;
+  font-size: 12px;
+}
+
+.fill-demo:hover {
+  background: #edf5ed;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  margin: 15px 0 6px;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 82px;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  width: auto;
+  margin: 0;
+  padding: 4px 6px;
+  border: 0;
+  background: transparent;
+  color: #465d4d;
+  font-size: 12px;
+  transform: translateY(-50%);
+}
+
+.password-toggle:hover {
+  background: transparent;
+  text-decoration: underline;
+}
+
+.remember-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 13px 0 0;
+  color: #444;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.remember-option input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: #477b60;
+}
+
+.submit-button {
+  width: 100%;
+  margin-top: 22px;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  background: #ffd814;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.submit-button:hover {
+  background: #f7ca00;
+}
+
+.error {
+  margin-top: 15px;
+  padding: 10px;
+  color: #b12704;
+  background: #fff0f0;
+  border-radius: 4px;
+}
+
+.divider {
+  text-align: center;
+  margin: 25px 0 15px;
+  color: #666;
+}
+
+.create-account {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  color: #222;
+  text-decoration: none;
+}
+
+.create-account:hover {
+  background: #f5f5f5;
+}

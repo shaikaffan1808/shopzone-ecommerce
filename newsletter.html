@@ -1,0 +1,19 @@
+<section class="newsletter">
+  <div class="newsletter-copy">
+    <span class="newsletter-kicker">{{ 'home.newsletterEyebrow' | translate }}</span>
+    <h2>{{ 'home.newsletterTitle' | translate }}</h2>
+    <p>{{ 'home.newsletterDescription' | translate }}</p>
+  </div>
+  <div class="newsletter-action">
+    <form (submit)="subscribe($event, emailInput)">
+      <label class="visually-hidden" for="newsletter-email">{{ 'home.newsletterPlaceholder' | translate }}</label>
+      <input #emailInput id="newsletter-email" type="email" autocomplete="email" required [placeholder]="'home.newsletterPlaceholder' | translate">
+      <button type="submit">{{ 'home.newsletterButton' | translate }} <span aria-hidden="true">→</span></button>
+    </form>
+    @if (subscribedEmail()) {
+      <p class="signup-success" role="status">{{ 'home.newsletterSuccess' | translate:{email: subscribedEmail()} }}</p>
+    } @else {
+      <p class="signup-note">{{ 'home.newsletterNote' | translate }}</p>
+    }
+  </div>
+</section>

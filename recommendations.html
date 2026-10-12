@@ -1,0 +1,129 @@
+<div class="recommendations-page">
+  <section class="recommendations-intro">
+    <span class="eyebrow">SHOPZONE PERSONAL PICKS</span>
+    <h1>Find your just-right picks</h1>
+    <p>Answer a few quick questions and we’ll match your preferences to products in our current store.</p>
+  </section>
+
+  <div class="recommendations-layout">
+    <section class="quiz-card">
+      <div class="card-heading">
+        <span class="step-number">01</span>
+        <div><h2>Your shopping quiz</h2><p>Personalize your product suggestions.</p></div>
+      </div>
+
+      <form (ngSubmit)="submitQuiz()">
+        <fieldset>
+          <legend>What are you shopping for?</legend>
+          <div class="interest-options">
+            @for (option of interests; track option.value) {
+              <label class="interest-option" [class.chosen]="interest === option.value">
+                <input type="radio" name="interest" [value]="option.value" [(ngModel)]="interest">
+                <span>{{ option.label }}</span>
+              </label>
+            }
+          </div>
+        </fieldset>
+
+        <label class="field-label" for="budget">Your approximate budget</label>
+        <select id="budget" name="budget" [(ngModel)]="budget">
+          <option value="any">No budget preference</option>
+          <option value="under-1000">Under ₹1,000</option>
+          <option value="1000-5000">₹1,000–₹5,000</option>
+          <option value="over-5000">Over ₹5,000</option>
+        </select>
+
+        <div class="skin-section">
+          <div class="skin-section-heading">
+            <div><span class="step-number">02</span><div><h2>Optional skin preference</h2><p>For cosmetic product matching only.</p></div></div>
+            <span class="privacy-badge">Private to this device</span>
+          </div>
+          <label class="field-label" for="skin-type">How would you describe your skin?</label>
+          <select id="skin-type" name="skinType" [(ngModel)]="skinType">
+            <option value="none">Skip this</option>
+            <option value="dry">Dry</option>
+            <option value="oily">Oily</option>
+            <option value="combination">Combination</option>
+            <option value="sensitive">Sensitive</option>
+          </select>
+
+          <label class="field-label" for="skin-goal">What sounds useful to you?</label>
+          <select id="skin-goal" name="skinGoal" [(ngModel)]="skinGoal">
+            <option value="any">No preference</option>
+            <option value="hydration">Everyday hydration</option>
+            <option value="oil-balance">A gentle cleansing routine</option>
+            <option value="simple-routine">A simple daily routine</option>
+          </select>
+          <p class="skin-disclaimer">This is a saved cosmetic preference, not a skin assessment or medical advice. Avoid products that irritate you and consult a qualified professional for skin concerns.</p>
+        </div>
+
+        <div class="quiz-actions">
+          <button class="primary-button" type="submit">Show my recommendations <span aria-hidden="true">→</span></button>
+          @if (quizComplete()) { <button class="text-button" type="button" (click)="clearProfile()">Clear saved profile</button> }
+        </div>
+      </form>
+    </section>
+
+    <aside class="premium-card">
+      <span class="premium-label">PREMIUM PREVIEW · DEMO</span>
+      <div class="premium-sparkle" aria-hidden="true">✦</div>
+      <h2>A little extra, in your corner.</h2>
+      <p>Explore a preview of possible member perks. No payment or real service is activated.</p>
+      <ul>
+        <li><span>↗</span><div><strong>Fast delivery preview</strong><small>Priority delivery is a concept only—not enabled.</small></div></li>
+        <li><span>✳</span><div><strong>Product insights</strong><small>Recommendations here use quiz rules, not AI.</small></div></li>
+        <li><span>♡</span><div><strong>Saved favorites</strong><small>Your wishlist stays saved in this browser.</small></div></li>
+      </ul>
+      @if (premiumJoined()) {
+        <p class="premium-success" role="status">{{ premiumMessage() || 'You’re on the local premium preview list.' }}</p>
+      } @else {
+        <form class="premium-form" (submit)="joinPremiumPreview($event)">
+          <label class="visually-hidden" for="premium-email">Email for premium preview</label>
+          <input id="premium-email" type="email" name="premiumEmail" [(ngModel)]="premiumEmail" placeholder="Your email address" autocomplete="email" required>
+          <button type="submit">Join preview list</button>
+        </form>
+        <p class="premium-note">Demo only. Your email is stored on this device; no payment, emails, AI service, or delivery change is triggered.</p>
+      }
+    </aside>
+  </div>
+
+  <section class="results-section" id="recommendation-results" aria-live="polite">
+      <div class="results-heading">
+        <div><span class="eyebrow">{{ (quizComplete() ? 'recommendations.personalEyebrow' : 'recommendations.popularEyebrow') | translate }}</span><h2>{{ (quizComplete() ? 'recommendations.personalTitle' : 'recommendations.popularTitle') | translate }}</h2><p>{{ recommendationStatus() | translate }}</p></div>
+        <a routerLink="/products">Browse all products <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="results-grid">
+        @for (product of recommendations(); track product.id) {
+          <article class="recommendation-card">
+            <div class="recommendation-image"><button type="button" class="analysis-image-trigger" [attr.aria-label]="'analysis.openFor' | translate:{name: product.name}" (click)="openAnalysis(product)"><img [src]="product.image" [alt]="product.name" loading="lazy"></button><span class="match-label">✦ PERSONAL PICK</span><button type="button" class="favorite-button" [class.is-favorite]="favoriteIds().includes(product.id)" [attr.aria-pressed]="favoriteIds().includes(product.id)" [attr.aria-label]="((favoriteIds().includes(product.id) ? 'products.removeFavorite' : 'products.addFavorite') | translate) + ': ' + product.name" (click)="toggleFavorite(product.id)">{{ favoriteIds().includes(product.id) ? '♥' : '♡' }}</button></div>
+            <div class="recommendation-info">
+              <span class="product-category">{{ product.category }}</span>
+              <button type="button" class="analysis-name-trigger" (click)="openAnalysis(product)">{{ product.name }}</button>
+              <p>{{ product.description }}</p>
+              <span class="match-reason">{{ recommendationReason(product) | translate }}</span>
+              <div class="recommendation-footer"><strong>{{ product.price | localizedCurrency }}</strong><span>⭐ {{ product.rating }}</span></div>
+              <button
+                type="button"
+                class="recommendation-cart-button"
+                [class.added]="addedProductIds().includes(product.id)"
+                [disabled]="product.stock === 0"
+                (click)="addToCart(product)">
+                🛒 {{ (addedProductIds().includes(product.id) ? 'recommendations.addedToCart' : 'products.addToCart') | translate }}
+              </button>
+            </div>
+          </article>
+        } @empty {
+          <div class="empty-results"><h3>{{ 'recommendations.emptyTitle' | translate }}</h3><p>{{ 'recommendations.emptyDescription' | translate }}</p><a routerLink="/products">{{ 'recommendations.browseProducts' | translate }}</a></div>
+        }
+      </div>
+  </section>
+  @if (selectedProduct(); as product) {
+    <app-product-analysis-dialog
+      [product]="product"
+      [profile]="analysisProfile()"
+      [isFavorite]="favoriteIds().includes(product.id)"
+      (closed)="selectedProduct.set(null)"
+      (favoriteToggled)="toggleFavorite($event)"
+    />
+  }
+</div>
